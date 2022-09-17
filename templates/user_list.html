@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+
+	<h1 class="subheader">Users</h1>
+	<h6 class="subheader">(click user ID to edit specific users)</h6>
+	<p></p>
+	<div class="table-responsive">
+	<table class="mx-auto w-auto">
+		<thead>
+		  <tr>
+			<td>User ID</td>
+			<td>Username</td>
+			<td>First Name</td>
+			<td>Last Name</td>
+		  </tr>		  
+		</thead>
+
+		{% for pk1, username, first_name, last_name in user_list %}
+		  <tr>
+			  <td><a href="/view_user/{{ pk1 }}">{{ pk1 }}</a></td>
+			  <td>{{ username }}</td>
+			  <td>{{ first_name }}</td>
+			  <td>{{ last_name }}</td>
+		  </tr>
+	   {% endfor %}
+	</table>
+    </div>
+	<p></p>
+	<p></p>
+	
+
+	<div class="row justify-content-center">
+  		<form action="/log_new_bug">
+		  <div class="form-group">
+			<input type=submit class="btn btn-primary form-control" value="Add New User" />
+		  </div>
+		</form>	
+	</div>
+	
+{% endblock %}
+

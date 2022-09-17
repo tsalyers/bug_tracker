@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+
+	<h1 class="subheader">Open Bug List</h1>
+	<h6 class="subheader">(click bug ID to view specific bugs)</h6>
+	<p></p>
+	<div class="table-responsive">
+	<table  class="mx-auto w-auto">
+		<thead>
+		  <tr>
+			<td>Bug ID</td>
+			<td>Description</td>
+			<td>Created</td>
+			<td>Severity</td>
+			<td>Assigned To</td>
+		  </tr>		  
+		</thead>
+
+		{% for pk1, description, creation_date, severity, first_name, last_name in bug_list %}
+		  <tr>
+			  <td><a href="/view_bug/{{ pk1 }}">{{ pk1 }}</a></td>
+			  <td>{{ description }}</td>
+			  <td>{{ creation_date }}</td>
+			  <td>{{ severity }}</td>
+			  <td>
+			      {% if first_name %}
+					{{ first_name }} {{ last_name }}
+				  {% endif %}</td>
+		  </tr>
+	   {% endfor %}
+	</table>
+	</div>
+    
+	<p></p>
+	<p></p>
+	
+
+	<div class="row justify-content-center">
+  		<form action="/log_new_bug">
+		  <div class="form-group">
+			<input type=submit class="btn btn-primary form-control" value="Log New Bug" />
+		  </div>
+		</form>	
+	</div>
+	
+{% endblock %}
+

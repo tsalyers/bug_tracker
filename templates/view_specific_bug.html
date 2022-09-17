@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+
+	{% set bug_id, description, reproduction_steps, creation_date, severity, first_name, last_name = bug_info[0] %}
+	
+	<h1 class="subheader">Viewing bug: {{ bug_id }}</h1>
+	<p></p>
+	
+<form>
+
+    <input type="hidden" name="bug_id" id="bug_id" value="{{ bug_id }}" />
+	
+	<div class="form-group">
+		<label for="description" >Description</label> 
+		<div>
+		<textarea readonly id="description" name="description" cols="30" rows="3" class="form-control">{{ description }}</textarea>
+		</div>
+	</div> 
+
+	<div class="form-group">
+		<label for="reproduction_steps" >Reproduction steps</label> 
+		<div>
+		<textarea readonly id="reproduction_steps" name="reproduction_steps" cols="30" rows="3" class="form-control">{{ reproduction_steps }}</textarea>
+		</div>
+	</div> 
+	
+	<div class="form-group">
+		<label for="creation_date" >Creation date</label> 
+		<div>
+		<input type="text" readonly id="creation_date" name="creation_date"  class="form-control" value="{{ creation_date }}" />
+		</div>
+	</div> 
+
+	<div class="form-group">
+		<label for="creation_date" >Severity</label> 
+		<div>
+		<input type="text" readonly id="severity" name="severity"  class="form-control" value="{{ severity }}" />
+		</div>
+	</div> 
+
+	<div class="form-group">
+		<label for="assigned_to" >Assigned to</label> 
+		<div>
+		<input type="text" readonly id="assigned_to" name="assigned_to"  class="form-control" value="{% if first_name %}{{ first_name }} {{ last_name }}{% endif %}" />
+		</div>
+	</div> 
+
+   
+	<p></p>
+	<p></p>
+	
+
+
+	<div class="row justify-content-center">
+		<div class="form-group">
+			<input type=submit formaction="/close_bug" formmethod="post" class="btn btn-primary form-control" value="Close Bug" />
+		</div>
+	</div>	
+	
+	<div class="row form-group">
+	     <label for="user_id"><b>Assign bug to:</b></label>
+		 <select name="user_id" id="user_id" class="form-control">
+		    {% for user in user_list %}
+			{% set user_id, username, first_name, last_name = user %}
+			<option value="{{ user_id }}">{{ first_name }} {{ last_name }}</option>
+			{% endfor %}
+		</select> 	
+	 </div>	
+	<div class="row justify-content-center">
+		<div class="form-group">
+			<input type=submit formaction="/assign_bug" formmethod="post" class="btn btn-primary form-control" value="Assign Bug" />
+		</div>
+	</div>	
+
+</form>
+
+	<div class="row justify-content-center">
+  		<form action="/">
+		  <div class="form-group">
+			<input type=submit class="btn btn-primary form-control" value="Return To Bug List" />
+		  </div>
+		</form>	
+	</div>
+	
+{% endblock %}
+

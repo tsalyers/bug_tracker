@@ -1,0 +1,48 @@
+/* 
+	Tweak the jumbotron a bit. The default one 
+	is really big and really gray.
+   
+*/
+
+.jumbotron {
+  height: 200px;
+  background-color: darkgreen;
+  padding-top: 35px;
+  color: white;
+  
+}
+
+.btn-primary {
+	background-color: darkgreen;
+}
+
+/*
+h1 {
+     padding-bottom: 20px;
+}
+
+*/		   
+table, th, td {
+  border: 1px solid;
+  border-collapse: collapse;
+  padding: 10px;
+}	
+
+thead {
+  background-color: darkgreen;
+  color: white;
+}
+
+td {
+  text-align: center;
+}	   
+
+.subheader {
+
+     text-align: center;
+}
+
+form {
+  text-align: center;
+}
+
