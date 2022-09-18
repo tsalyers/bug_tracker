@@ -65,3 +65,9 @@ CREATE_USER_QUERY = '''
 		INSERT INTO users (username, first_name, last_name)
 		VALUES (?, ?, ?)
 		'''
+
+UPDATE_USER_QUERY = '''
+		UPDATE USERS
+		SET first_name=?, last_name=?
+		WHERE pk1 = ?
+		'''

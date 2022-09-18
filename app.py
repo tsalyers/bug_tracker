@@ -1,11 +1,16 @@
-from flask import Flask, flash, request, redirect, url_for, render_template, session
-import datetime
+from flask import Flask, request, redirect, url_for, render_template, session
+from datetime import datetime
 from . import database_ops as db
 
 
 # Initialize our app.
 app = Flask(__name__)
-#app.secret_key = "I_am_a_long_random_string_of_characters_not_really_change_me"
+
+# Convenience method for logging. 
+# NB: In production, you would have a dedicated logging service--ELK, Splunk, etc.
+# Here, we'll just print to standard output. 
+def get_timestamp():
+	return str(datetime.now())
 
 	
 # ----------- Bug-related routes	
@@ -31,7 +36,7 @@ def close_bug():
 		db.close_bug(bug_id)
 		print('DEBUG - Closed bug ' + str(bug_id))
 	else:
-		flash("Error closing bug--ID not found or database error. Consult your administrator.")
+		print("Error closing bug--ID not found or database error.")
 	
 	return redirect('/')
 
@@ -44,14 +49,13 @@ def assign_bug():
 	
 	if bug_id and user_id:
 		db.assign_bug(bug_id, user_id)
-		print('DEBUG - assigned bug ' + str(bug_id) + ' to user ' + str(user_id))
 	else:
-		flash("Error assigning bug--ID not found or database error. Consult your administrator.")	
+		print("Error assigning bug--ID not found or database error.")	
 	
 	return redirect('/')
 
 
-# Create a new bug in the database.
+# Load the "create a new bug" page.
 @app.route('/log_new_bug', methods=['GET'])
 def log_new_bug():
 	return render_template('log_new_bug.html')
@@ -63,7 +67,7 @@ def create_bug():
 	description = request.form.get('description')
 	reproduction_steps = request.form.get('reproduction_steps')
 	severity = request.form.get('severity')
-	
+		
 	db.create_bug(description, reproduction_steps, severity)
 	return redirect('/') 
 	
@@ -74,6 +78,49 @@ def list_users():
 	users = db.retrieve_user_list()
 	return render_template('user_list.html',user_list=users)	
 
+
+# View/edit a specific user. 
+@app.route('/view_user/<user_id>', methods=['GET'])
+def view_user(user_id):
+	user_info = db.retrieve_user_info(user_id)
+	return render_template('view_specific_user.html', user_info=user_info)
+
 	
+# Updates a user's name(s). Doesn't display anything.	
+@app.route('/update_user', methods=['POST']) 
+def update_user():
+	user_id = request.form.get('user_id')
+	first_name = request.form.get('first_name')
+	last_name = request.form.get('last_name')
+	
+	if user_id and first_name and last_name:
+		db.update_user(first_name, last_name, user_id)
+		print(get_timestamp() + " Updated user {}. Name is now {} {}.".format(user_id, first_name, last_name))
+	else:
+		print("Error updating user--ID not found or database error.")	
+	
+	return redirect('/list_users')
+
+# Load the "create a new user" page. 
+@app.route('/create_user', methods=['GET'])
+def create_user():
+	return render_template('create_user.html')
+
+	
+# Add the new user to the database and go back to the user list.
+@app.route('/add_user', methods=['POST']) 
+def add_user():
+	username = request.form.get('username')
+	first_name = request.form.get('first_name')
+	last_name = request.form.get('last_name')
+	
+	if username and first_name and last_name:
+		db.create_user(username, first_name, last_name)
+		print(get_timestamp() + " Attempted to create user with username{}. Name is now {} {}.".format(username, first_name, last_name))
+		print("If the user has not been created, check that the username does not already exist.")
+	else:
+		print(get_timestamp() + " Error updating user--ID not found or database error.")	
+	
+	return redirect('/list_users')
 if __name__ == "__main__":
 	app.run()

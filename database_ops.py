@@ -64,3 +64,6 @@ def create_user(username, first_name, last_name):
 	execute_query(queries.CREATE_USER_QUERY, query_parameters=(username, first_name, last_name))
 	return
 
+def update_user(user_id, first_name, last_name):
+	execute_query(queries.UPDATE_USER_QUERY, query_parameters=(user_id, first_name, last_name))
+	return
