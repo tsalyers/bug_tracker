@@ -3,6 +3,7 @@
 # of an RDBMS server and driver dependencies for a demo project like this. 
 import sqlite3
 from . import queries
+from . import logging
 
 DBNAME= 'database\\bug_tracker.sqlite'
 
@@ -11,16 +12,21 @@ DBNAME= 'database\\bug_tracker.sqlite'
 # connection/cursor operations everywhere.
 # TODO: Error handling. If anything goes wrong, it'll be here.
 def execute_query(query_string, query_parameters=None):
-	conn = sqlite3.connect(DBNAME)
-	cur = conn.cursor()
-	if query_parameters is not None:	
-		cur.execute(query_string, query_parameters)
-	else:
-		cur.execute(query_string)
-	results = cur.fetchall()
-	cur.close()
-	conn.commit()
-	conn.close()
+	results = ()
+	try:
+		conn = sqlite3.connect(DBNAME)
+		cur = conn.cursor()
+		if query_parameters is not None:	
+			cur.execute(query_string, query_parameters)
+		else:
+			cur.execute(query_string)
+		results = cur.fetchall()
+		cur.close()
+		conn.commit()
+		conn.close()
+	except Exception as e:
+		#NB: Ideally you'd catch specific exceptions here. We'll cast a wide net for now.
+		logging.write_to_log("ERROR--exception occurred in database operation. Error message: {}".format(str(e)))
 	return results
 
 # Bug-based methods...
