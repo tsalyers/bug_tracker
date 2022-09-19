@@ -7,7 +7,7 @@
 2. Create a Python virtual environment in the directory containing the source code--e.g. `python -m venv env`. (Python 3.9 was used in development, but any reasonably recent Python should do.)
 3. Activate the virtual environment--e.g., `source env/bin/activate` in Linux or `env\scripts\activate` in Windows. 
 4. Run `pip install -r requirements.txt` to install dependencies. 
-5. Set the environment variable `FLASK_APP` to `app.py`--`export FLASK_APP=app.py` in Linux, `set FLASK_APP=app.py` in Windows. 
+5. Set the environment variable `FLASK_APP` to `app.py`--`export FLASK_APP=app.py` in Linux, `set FLASK_APP=app.py` in Windows. (Optionally also set `FLASK_DEBUG` to `1`, which will give you more informative error messages. Only use this for testing.)
 6. Run the command `flask run`, and the development server should start. 
 7. Visit `http://localhost:5000` to view and work with the application. (Note: 5000 is the default value for the Flask development server port. If you can't connect, check the server's startup message to see if the value is different.)
 
