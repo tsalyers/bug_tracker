@@ -1,6 +1,8 @@
-# Why SQLite? Obviously, you'd use something *much* more robust like PostgreSQL in
-# actual production. SQLite handling is built into Python, though, so this avoids the overhead
-# of an RDBMS server and driver dependencies for a demo project like this.
+# A rough-and-ready API for CRU (there's currently no D) operations on
+# bugs and users. Currently just a set of functiions, since this is a small
+# single-user application, but they could be REST-ized for a larger system. 
+
+
 import sqlite3
 from . import queries
 from . import logging
