@@ -11,6 +11,8 @@
 6. Run the command `flask run`, and the development server should start. 
 7. Visit `http://localhost:5000` to view and work with the application. (Note: 5000 is the default value for the Flask development server port. If you can't connect, check the server's startup message to see if the value is different.)
 
+(Optionally, you can also run `pytest tests/tests.py` to run a small suite of tests.)
+
 ### A caveat
 As the Flask development server warns you, it's for demo/testing purposes **only**. In production you would use something much more robust to serve your application, like Nginx and Gunicorn. 
 
