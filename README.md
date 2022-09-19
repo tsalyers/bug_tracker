@@ -12,8 +12,12 @@
 7. Visit `http://localhost:5000` to view and work with the application. (Note: 5000 is the default value for the Flask development server port. If you can't connect, check the server's startup message to see if the value is different.)
 
 ### A caveat
-As the Flask development server warns you, this is for demo/testing purposes **only**. In production you would use something much more robust, like Nginx and Gunicorn. 
+As the Flask development server warns you, it's for demo/testing purposes **only**. In production you would use something much more robust to serve your application, like Nginx and Gunicorn. 
 
 ### Design decisions
 - Why Flask? It's small, it's lightweight, and it's fast to develop in. Something like Django comes with a lot of overhead. 
 - Why SQLite? Obviously, you'd use something *much* more robust like PostgreSQL in actual production. SQLite handling is built into Python, though, so this avoids the overhead of an RDBMS server and driver dependencies for a smallish demo project like this. (The application's structured so the underlying database could be pretty easily swapped out, though.)
+- Why raw SQL instead of an ORM like SQLAlchemy? I've used ORMs before and generally found that for smaller projects like this they introduce more overhead/dependency than they're worth. It's generally faster for me to write in raw SQL, especially if the queries start getting large and complex. 
+- Why Jinja2 (the templating engine built into Flask)? This is where I have to confess to being primarily a back-end developer who's been teaching himself front-end skills when he has spare time. In the last year or so I've been trying to learn Vue.js (since it seems to have the least steep learning curve). I'm much more familiar with Flask's templating engine, though, *and* I had a base template I could borrow from an existing project, so that's what I went with. 
+
+### Enhancements for the (hypothetical) future
