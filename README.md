@@ -27,8 +27,8 @@ As the Flask development server warns you, it's for demo/testing purposes **only
 - **Actual logging**. This is alluded to in the comments, but in production you'd want your log messages going into a system where they can be catalogued and searched--something like Splunk. 
 
 ##### The less-big (but still important) things
-- If we're sticking with the template engine, I'd want to re-examine the inheritance hierarchy. Some of them are just similar enough that they could inherit from common ancestors instead of everything inheriting right from the base template. 
-- Possibly split up the bug and user functionality into separate Flask blueprints and register them in the main application for neatness. What we have right now isn't bad, but it's starting to border on a little unwieldy. 
+- If we're sticking with the template engine, I'd want to re-examine the inheritance hierarchy. Some of the templates are just similar enough that they could inherit from common ancestors instead of everything inheriting right from the base template. 
+- Possibly split up the bug and user functionality into separate Flask blueprints and register them in the main application for neatness. What we have right now is perfectly readable, but it's starting to push the edge of unwieldy. 
 - In the user edit screen, we're currently updating the first and last name fields in the database even if they haven't actually changed, which *works*, but isn't ideal. I'd most likely watch for an `onchange` event in the fields and act accordingly.
 - Add functionality to assign a bug to a user at bug creation. Currently you have to create a bug, go back to the main bug screen, and then assign it, which is an extra step. 
 - Change the "view individual bug/user" requests from GET to POST. Currently the IDs show up in the URL, which isn't terrible--no one should be able to access those URLs without permission--but ideally you don't want IDs like that exposed. 
