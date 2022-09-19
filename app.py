@@ -4,14 +4,8 @@ from .database import database_ops as db
 from .log_ops import write_to_log
 
 
-# Slight extra step for Pytest.
-def create_app():
-    app = Flask(__name__)
-    return app
-
 # Initialize our app.
-# app = Flask(__name__)
-app = create_app()
+app = Flask(__name__)
 
 
 # ----------- Bug-related routes
@@ -52,6 +46,7 @@ def assign_bug():
 
     if bug_id and user_id:
         db.assign_bug(bug_id, user_id)
+        write_to_log("Attempted to assign bug {} to user ID {}.".format(bug_id, user_id))
     else:
         write_to_log("Error assigning bug--ID not found or database error.")
 
