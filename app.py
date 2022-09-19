@@ -1,10 +1,17 @@
 from flask import Flask, request, redirect, render_template
-from . import database_ops as db
-from . import logging
+#from . import database_ops as db
+from .database import database_ops as db
+from .log_ops import write_to_log
 
+
+# Slight extra step for Pytest.
+def create_app():
+    app = Flask(__name__)
+    return app
 
 # Initialize our app.
-app = Flask(__name__)
+# app = Flask(__name__)
+app = create_app()
 
 
 # ----------- Bug-related routes
@@ -30,9 +37,9 @@ def close_bug():
     bug_id = request.form.get('bug_id')
     if bug_id:
         db.close_bug(bug_id)
-        logging.write_to_log('DEBUG - Closed bug ' + str(bug_id))
+        write_to_log('DEBUG - Closed bug ' + str(bug_id))
     else:
-        logging.write_to_log("Error closing bug--ID not found or database error.")
+        write_to_log("Error closing bug--ID not found or database error.")
 
     return redirect('/')
 
@@ -46,7 +53,7 @@ def assign_bug():
     if bug_id and user_id:
         db.assign_bug(bug_id, user_id)
     else:
-        logging.write_to_log("Error assigning bug--ID not found or database error.")
+        write_to_log("Error assigning bug--ID not found or database error.")
 
     return redirect('/')
 
@@ -64,7 +71,11 @@ def create_bug():
     reproduction_steps = request.form.get('reproduction_steps')
     severity = request.form.get('severity')
 
-    db.create_bug(description, reproduction_steps, severity)
+    if description and reproduction_steps and severity:
+        db.create_bug(description, reproduction_steps, severity)
+        write_to_log("Attempted to create bug with description '{}'").format(description)
+    else:
+	    write_to_log("Error creating bug--bug info not found or database error.")
     return redirect('/')
 
 
@@ -91,9 +102,9 @@ def update_user():
 
     if user_id and first_name and last_name:
         db.update_user(first_name, last_name, user_id)
-        logging.write_to_log("Updated user {}. Name is now {} {}.".format(user_id, first_name, last_name))
+        write_to_log("Updated user {}. Name is now {} {}.".format(user_id, first_name, last_name))
     else:
-        logging.write_to_log("Error updating user--ID not found or database error.")
+        write_to_log("Error updating user--ID not found or database error.")
 
     return redirect('/list_users')
 
@@ -113,10 +124,10 @@ def add_user():
 
     if username and first_name and last_name:
         db.create_user(username, first_name, last_name)
-        logging.write_to_log("Attempted to create user with username {} and name {} {}.".format(username, first_name, last_name))
-        logging.write_to_log("If the user has not been created, check that the username does not already exist.")
+        write_to_log("Attempted to create user with username {} and name {} {}.".format(username, first_name, last_name))
+        write_to_log("If the user has not been created, check that the username does not already exist.")
     else:
-        logging.write_to_log("Error updating user--ID not found or database error.")
+        write_to_log("Error updating user--ID not found or database error.")
 
     return redirect('/list_users')
 if __name__ == "__main__":
