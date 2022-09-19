@@ -22,9 +22,9 @@ As the Flask development server warns you, it's for demo/testing purposes **only
 
 ### Enhancements for the (hypothetical) future
 ##### The big things
-- Actual production-level infrastructure--i.e., database and webserver. SQLite and the Flask web server are fine for a quick test/demo, but for real-world use you'd want something like PostgreSQL and Nginx/Gunicorn. 
-- Some type of access control--logins, permissions, and so on--to restrict the system only to people who should be using it. (For instance, I have a current web application that authenticates users against our LDAP server and then checks an internal table for their permissions.)
-- Actual logging. This is alluded to in the comments, but in production you'd want your log messages going into a system where they can be catalogued and searched--something like Splunk. 
+- **Actual production-level infrastructure**--i.e., database and web server. SQLite and the Flask web server are fine for a quick test/demo, but for real-world use you'd want something like PostgreSQL and Nginx/Gunicorn. 
+- **Some type of access control**--logins, permissions, and so on--to restrict the system only to people who should be using it. (For instance, I have a current web application that authenticates users against our LDAP server and then checks an internal table for their permissions.)
+- **Actual logging**. This is alluded to in the comments, but in production you'd want your log messages going into a system where they can be catalogued and searched--something like Splunk. 
 
 ##### The less-big (but still important) things
 - If we're sticking with the template engine, I'd want to re-examine the inheritance hierarchy. Some of them are just similar enough that they could inherit from common ancestors instead of everything inheriting right from the base template. 
