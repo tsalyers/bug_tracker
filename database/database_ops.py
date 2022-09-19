@@ -5,7 +5,7 @@
 
 import sqlite3
 from . import queries
-from . import logging
+from ..log_ops import write_to_log
 
 DBNAME = 'database\\bug_tracker.sqlite'
 
@@ -27,7 +27,7 @@ def execute_query(query_string, query_parameters=None):
         conn.close()
     except Exception as e:
         # NB: Ideally you'd catch specific exceptions here. We'll cast a wide net for now.
-        logging.write_to_log("ERROR--exception occurred in database operation. Error message: {}".format(str(e)))
+        write_to_log("ERROR--exception occurred in database operation. Error message: {}".format(str(e)))
     return results
 
 # Bug-based methods...
