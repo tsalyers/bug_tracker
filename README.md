@@ -15,15 +15,15 @@
 As the Flask development server warns you, it's for demo/testing purposes **only**. In production you would use something much more robust to serve your application, like Nginx and Gunicorn. 
 
 ### Design decisions
-- Why Flask? It's small, it's lightweight, and it's fast to develop in. Something like Django comes with a lot of overhead. 
-- Why SQLite? Obviously, you'd use something *much* more robust like PostgreSQL in actual production. SQLite handling is built into Python, though, so this avoids the overhead of an RDBMS server and driver dependencies for a smallish demo project like this. (The application's structured so the underlying database could be pretty easily swapped out, though.)
-- Why raw SQL instead of an ORM like SQLAlchemy? I've used ORMs before and generally found that for smaller projects like this they introduce more overhead/dependency than they're worth. I'm not opposed to ORMs, but it's generally faster for me to write in raw SQL, especially if the queries start getting large and complex. 
-- Why Jinja2 (the templating engine built into Flask)? This is where I have to confess to being primarily a back-end developer who's been teaching himself front-end skills when he has spare time. In the last year or so I've been trying to learn Vue.js (since it seems to have the least steep learning curve). I'm much more familiar with Flask's templating engine, though, *and* I had a base template I could borrow from an existing project, so that's what I went with. 
+- **Why Flask?** It's small, it's lightweight, and it's fast to develop in. Something like Django comes with a lot of overhead. 
+- **Why SQLite?** Obviously, you'd use something *much* more robust like PostgreSQL in actual production. SQLite handling is built into Python, though, so this avoids the overhead of an RDBMS server and driver dependencies for a smallish demo project like this. (The application's structured so the underlying database could be pretty easily swapped out, though.)
+- **Why raw SQL instead of an ORM like SQLAlchemy?** I've used ORMs before and generally found that for smaller projects like this they introduce more overhead/dependency than they're worth. I'm not opposed to ORMs, but it's generally faster for me to write in raw SQL, especially if the queries start getting large and complex. 
+- **Why Jinja2 (the templating engine built into Flask)?** This is where I have to confess to being primarily a back-end developer who's been teaching himself front-end skills when he has spare time. In the last year or so I've been trying to learn Vue.js (since it seems to have the least steep learning curve). I'm much more familiar with Flask's templating engine, though, *and* I had a base template I could borrow from an existing project, so that's what I went with. 
 
 ### Enhancements for the (hypothetical) future
 ##### The big things
 - Actual production-level infrastructure--i.e., database and webserver. SQLite and the Flask web server are fine for a quick test/demo, but for real-world use you'd want something like PostgreSQL and Nginx/Gunicorn. 
-- Some type of access control--logins, permissions, and so on--to restrict the system only to people who should be using it. (I have a current web application that authenticates users against our LDAP server and then checks an internal table for their permissions.)
+- Some type of access control--logins, permissions, and so on--to restrict the system only to people who should be using it. (For instance, I have a current web application that authenticates users against our LDAP server and then checks an internal table for their permissions.)
 - Actual logging. This is alluded to in the comments, but in production you'd want your log messages going into a system where they can be catalogued and searched--something like Splunk. 
 
 ##### The less-big (but still important) things
