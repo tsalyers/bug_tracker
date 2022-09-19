@@ -68,7 +68,7 @@ def create_bug():
 
     if description and reproduction_steps and severity:
         db.create_bug(description, reproduction_steps, severity)
-        write_to_log("Attempted to create bug with description '{}'").format(description)
+        write_to_log("Attempted to create bug with description '{}'".format(description))
     else:
 	    write_to_log("Error creating bug--bug info not found or database error.")
     return redirect('/')
