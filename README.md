@@ -34,3 +34,4 @@ As the Flask development server warns you, it's for demo/testing purposes **only
 - In the user edit screen, we're currently updating the first and last name fields in the database even if they haven't actually changed, which *works*, but isn't ideal. I'd most likely watch for an `onchange` event in the fields and act accordingly.
 - Add functionality to assign a bug to a user at bug creation. Currently you have to create a bug, go back to the main bug screen, and then assign it, which is an extra step. 
 - Change the "view individual bug/user" requests from GET to POST. Currently the IDs show up in the URL, which isn't terrible--no one should be able to access those URLs without permission--but ideally you don't want IDs like that exposed. 
+- Add some sort of text-similarity processing to flag up potential duplicate bugs. Right now there's no prevention in place for filing the same (or similar) bug under two different IDs. 
