@@ -1,4 +1,8 @@
 # A short set of tests for demo purposes. 
+#
+# It's very rudimentary because this is my first time using pytest-flask,
+# and I ran into some issues importing app from my application.
+#
 # Production ones would of course be quite a bit more extensive. 
 
 import pytest
